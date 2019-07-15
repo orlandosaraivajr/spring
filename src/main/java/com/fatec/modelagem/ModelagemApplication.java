@@ -13,6 +13,7 @@ import com.fatec.modelagem.domain.Cidade;
 import com.fatec.modelagem.domain.Cliente;
 import com.fatec.modelagem.domain.Endereco;
 import com.fatec.modelagem.domain.Estado;
+import com.fatec.modelagem.domain.ItemPedido;
 import com.fatec.modelagem.domain.Pagamento;
 import com.fatec.modelagem.domain.PagamentoComBoleto;
 import com.fatec.modelagem.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.fatec.modelagem.repositories.CidadeRepository;
 import com.fatec.modelagem.repositories.ClienteRepository;
 import com.fatec.modelagem.repositories.EnderecoRepository;
 import com.fatec.modelagem.repositories.EstadoRepository;
+import com.fatec.modelagem.repositories.ItemPedidoRepository;
 import com.fatec.modelagem.repositories.PagamentoRepository;
 import com.fatec.modelagem.repositories.PedidoRepository;
 import com.fatec.modelagem.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class ModelagemApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentorepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ModelagemApplication.class, args);
@@ -112,5 +116,19 @@ public class ModelagemApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentorepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.0, 1, 2000.0);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.0, 2, 80.0);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.0, 1, 800.0);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip1));
+		p3.getItens().addAll(Arrays.asList(ip3));
+	
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+		
 	}
 }
