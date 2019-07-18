@@ -14,6 +14,7 @@ import com.fatec.modelagem.dto.ClienteNewDTO;
 import com.fatec.modelagem.repositories.ClienteRepository;
 import com.fatec.modelagem.resources.exception.FieldMessage;
 import com.fatec.modelagem.services.validation.utils.BR;
+
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
 	
 	@Autowired
